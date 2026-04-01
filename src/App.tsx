@@ -77,7 +77,7 @@ function App() {
       <main className="dashboard-content">
         <div className="analytics-card">
           <div className="analytics-card-info">
-            <h2 className="analytics-card-title">Advanced Analytics Dashboard</h2>
+            <h2 className="analytics-card-title">Advanced Analytics Dashboards</h2>
             <p className="analytics-card-subtitle">
               Gain insight into your practice with real-time AI analytics
             </p>
