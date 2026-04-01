@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react'
 import './App.css'
 
-const EMBED_URL = 'http://localhost:5173/'
+const DEFAULT_EMBED_URL = 'http://localhost:5173/'
 
 // ─── Analytics Modal ───────────────────────────────────────────────────────────
 
-function AnalyticsModal({ onClose }: { onClose: () => void }) {
+function AnalyticsModal({ url, onClose }: { url: string; onClose: () => void }) {
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === e.currentTarget) onClose()
@@ -25,7 +25,7 @@ function AnalyticsModal({ onClose }: { onClose: () => void }) {
         <div className="modal-body">
           <iframe
             className="embed-iframe"
-            src={EMBED_URL}
+            src={url}
             title="Advanced Analytics Dashboard"
             allow="fullscreen"
           />
@@ -41,6 +41,7 @@ const ORGANIZATIONS = ['CoVet Organization Test', 'Org Alpha', 'Org Beta']
 
 function App() {
   const [selectedOrg, setSelectedOrg] = useState(ORGANIZATIONS[0])
+  const [embedUrl, setEmbedUrl] = useState(DEFAULT_EMBED_URL)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = useCallback(() => setIsModalOpen(true), [])
@@ -76,19 +77,37 @@ function App() {
 
       <main className="dashboard-content">
         <div className="analytics-card">
-          <div className="analytics-card-info">
-            <h2 className="analytics-card-title">Advanced Analytics Dashboards</h2>
-            <p className="analytics-card-subtitle">
-              Gain insight into your practice with real-time AI analytics
-            </p>
+          <div className="analytics-card-top">
+            <div className="analytics-card-info">
+              <h2 className="analytics-card-title">Advanced Analytics Dashboard</h2>
+              <p className="analytics-card-subtitle">
+                Gain insight into your practice with real-time AI analytics
+              </p>
+            </div>
+            <button className="view-analytics-btn" onClick={openModal} disabled={!embedUrl.trim()}>
+              View Analytics
+            </button>
           </div>
-          <button className="view-analytics-btn" onClick={openModal}>
-            View Analytics
-          </button>
+
+          <div className="card-config">
+            <div className="card-config-field">
+              <label className="card-config-label" htmlFor="cfg-url">
+                Dashboard URL
+              </label>
+              <input
+                id="cfg-url"
+                className="card-config-input"
+                type="url"
+                value={embedUrl}
+                onChange={(e) => setEmbedUrl(e.target.value)}
+                placeholder="https://..."
+              />
+            </div>
+          </div>
         </div>
       </main>
 
-      {isModalOpen && <AnalyticsModal onClose={closeModal} />}
+      {isModalOpen && <AnalyticsModal url={embedUrl} onClose={closeModal} />}
     </div>
   )
 }

@@ -94,12 +94,18 @@ body {
 /* ─── Analytics Card ──────────────────────────────────────── */
 .analytics-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 22px 28px;
+  gap: 20px;
+}
+
+.analytics-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 16px;
 }
 
